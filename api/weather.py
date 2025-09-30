@@ -1,9 +1,25 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 import requests
 import os
 
 app = FastAPI()
+
+# ✅ Allow only your sites
+origins = [
+    "https://www.khabar24live.com",
+    "https://hindi.asthaguru.com",
+    "https://www.asthaguru.com"
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,      # only allow your domains
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Get API key from environment variable
 WEATHER_API_KEY = os.getenv("WEATHER_API_KEY", "YOUR_API_KEY_HERE")
